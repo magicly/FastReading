@@ -52,15 +52,27 @@ const ITNewsTabNavigator = TabNavigator({
   });
 
 const ITNews = StackNavigator({
-  ITNewsTab: { screen: ITNewsTabNavigator },
-  CNodeJS: { screen: CNodeJSList },
+  ITNewsTab: {
+    screen: ITNewsTabNavigator,
+  },
+  CNodeJS: {
+    screen: CNodeJSList,
+    navigationOptions: ({ navigation }) => ({
+      title: `${navigation.state.params.name}`
+    }),
+  },
   OSChina: {
     screen: OSChinaList,
     navigationOptions: ({ navigation }) => ({
       title: `${navigation.state.params.name}`
     }),
   },
-  TouTiao: { screen: ToutiaoList },
+  TouTiao: {
+    screen: ToutiaoList,
+    navigationOptions: ({ navigation }) => ({
+      title: `${navigation.state.params.name}`
+    }),
+  },
   NewsDetail: { screen: NewsDetail },
   Stars: {
     screen: StarList,
