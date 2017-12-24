@@ -1,57 +1,79 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
 import React, { Component } from 'react';
-import {
-  Platform,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native';
+import { StackNavigator, TabNavigator, TabBarBottom } from 'react-navigation';
+import Icon from "react-native-vector-icons/FontAwesome";
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' +
-    'Cmd+D or shake for dev menu',
-  android: 'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
+import UserComponent from './components/User';
+import HomeComponent from './components/Home';
 
-export default class App extends Component<{}> {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit App.js
-        </Text>
-        <Text style={styles.instructions}>
-          {instructions}
-        </Text>
-      </View>
-    );
+import CNodeJSList from './components/CNodeJSList';
+import OSChinaList from './components/OSChinaList';
+import ToutiaoList from './components/ToutiaoList';
+import NewsDetail from "./components/NewsDetail";
+import StarList from "./components/StarList";
+import BookMarkList from "./components/BookMarkList";
+
+const ITNewsTabNavigator = TabNavigator({
+  Main: {
+    screen: HomeComponent,
+    navigationOptions: {
+      title: 'FastReading',
+      headerTitle: 'FastReading',
+      tabBarLabel: 'FastReading',
+      tabBarIcon: ({ tintColor }) => (
+        <Icon
+          name="home"
+          size={24}
+          color={tintColor}
+        />
+      )
+    }
+  },
+  User: {
+    screen: UserComponent,
+    navigationOptions: {
+      title: '我的',
+      headerTitle: '我的',
+      tabBarLabel: "我的",
+      tabBarIcon: ({ tintColor }) => (
+        <Icon
+          name="user"
+          size={24}
+          color={tintColor}
+        />
+      )
+    }
   }
-}
+}, {
+    tabBarComponent: TabBarBottom,
+    tabBarPosition: 'bottom',
+    swipeEnabled: true,
+    animationEnabled: true,
+    backBehavior: 'none',
+  });
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+const ITNews = StackNavigator({
+  ITNewsTab: { screen: ITNewsTabNavigator },
+  CNodeJS: { screen: CNodeJSList },
+  OSChina: {
+    screen: OSChinaList,
+    navigationOptions: ({ navigation }) => ({
+      title: `${navigation.state.params.name}`
+    }),
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
+  TouTiao: { screen: ToutiaoList },
+  NewsDetail: { screen: NewsDetail },
+  Stars: {
+    screen: StarList,
+    navigationOptions: {
+      headerTitle: '我的收藏'
+    }
   },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
+  BookMarks: {
+    screen: BookMarkList,
+    navigationOptions: {
+      headerTitle: '我的书签'
+    }
   },
 });
+
+export default ITNews;
