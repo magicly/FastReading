@@ -1,3 +1,4 @@
+// @flow
 import React from 'react';
 import {
   Image,
@@ -11,7 +12,7 @@ import InfoList from './InfoList';
 
 const url = 'https://www.oschina.net/action/ajax/get_more_news_list?newsType=&p=';
 
-export default (props) => {
+export default (props: { navigation: { navigate: any } }) => {
   const fetchData = async (pageNo) => {
     console.log('fetchData:===== ', pageNo);
     try {

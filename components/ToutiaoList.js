@@ -1,3 +1,4 @@
+// @flow
 import React, { Component } from 'react';
 import {
   Image,
@@ -15,8 +16,7 @@ import InfoList from './InfoList';
 const url = 'https://toutiao.io/prev/';
 const ONEDAY = 24 * 60 * 60 * 1000;
 
-export default (props) => {
-
+export default (props: { navigation: { navigate: any } }) => {
   const fetchData = async pageNo => {
     try {
       console.log('pageNo:===', pageNo);

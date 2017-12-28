@@ -1,4 +1,6 @@
-import React, { Component } from 'react';
+// @flow
+import * as React from 'react';
+import PropTypes from 'prop-types';
 import {
   FlatList,
   Text,
@@ -8,14 +10,25 @@ import {
   TouchableHighlight,
 } from 'react-native';
 
-export default class ItemList extends Component {
-  constructor(props) {
+type Props = {
+  renderRow: any => any,
+  getPageNo?: number => string,
+  navigation: { navigate: any },
+  fetchData: (pageNo: number | string) => Promise<any[]>,
+}
+type State = {
+  refreshing: boolean,
+  loadMore: boolean,
+  pageNo: number,
+  dataSource: any[],
+}
+export default class ItemList extends React.Component<Props, State> {
+  constructor(props: Props) {
     super(props);
 
     this.state = ({
       refreshing: true,
       loadMore: false,
-      name: this.props.name,
       pageNo: 1,
       dataSource: [],
     })
@@ -31,12 +44,12 @@ export default class ItemList extends Component {
       const pageNoStr = this.props.getPageNo ? this.props.getPageNo(pageNo) : pageNo;
       const newItems = await this.props.fetchData(pageNoStr);
 
-      if (newItems.length === 0) {// No More Data...
-        this.setState({
-          noMore: true,
-        })
-        return;
-      }
+      // if (newItems.length === 0) {// No More Data...
+      //   this.setState({
+      //     noMore: true,
+      //   })
+      //   return;
+      // }
 
       this.setState({
         refreshing: false,
@@ -60,7 +73,7 @@ export default class ItemList extends Component {
 
   onEndReached = () => {
     console.log('onEndReached: ', this.state.pageNo)
-    if (this.state.noMore) return; // 没有数据了
+    // if (this.state.noMore) return; // 没有数据了
     // if (this.state.loadMore) return;// 正在加载ing
     // if (this.state.refreshing) return;// 正在刷新ing，一开始在获取数据， 会触发很多次onEndReached
     this.setState({
@@ -69,15 +82,15 @@ export default class ItemList extends Component {
     }, () => this.loadMore());
   }
 
-  onPress = item => {
-    const { navigate } = this.props.navigation;
+  onPress = (item: { title: string, href: string }) => {
+    const navigate: any = this.props.navigation.navigate;
     navigate('NewsDetail', {
       title: item.title,
       href: item.href
     })
   }
 
-  renderRow = item => {
+  renderRow = (item: any) => {
     return <TouchableHighlight
       underlayColor='#008b8b'
       onPress={() => this.onPress(item)}>

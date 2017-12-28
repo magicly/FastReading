@@ -5,7 +5,7 @@ function f(n: number): number {
 
 
 function g(value: mixed) {
-  '' + value;
+  // '' + value;
 }
 
 
@@ -59,15 +59,15 @@ function concat(a: string, b: string): string {
 }
 
 concat("foo", "bar"); // Works!
-const r: number = concat("foo", "bar"); // Error!
+// const r: number = concat("foo", "bar"); // Error!
 // $ExpectError
-concat(true, false);  // Error!
+// concat(true, false);  // Error!
 
-function method(): boolean {
-  if (Math.random() > 0.5) {
-    return true;
-  }
-}
+// function method(): boolean {
+//   if (Math.random() > 0.5) {
+//     return true;
+//   }
+// }
 
 
 var obj = {};
@@ -80,7 +80,7 @@ var bar: boolean = obj.bar; // Works!
 var baz: string = obj.baz; // Works?
 
 // @flow
-const foo: {| foo: string |} = { foo: "Hello", bar: "World!" }; // Error!
+// const foo: {| foo: string |} = { foo: "Hello", bar: "World!" }; // Error!
 
 
 // @flow
@@ -104,7 +104,7 @@ tuple.join(', '); // Works!
 tuple.length;
 tuple.slice(2);
 // $ExpectError
-tuple.push(3);    // Error!
+// tuple.push(3);    // Error!
 
 
 // @flow
@@ -126,15 +126,15 @@ type Response = {
   error?: string
 };
 
-function handleResponse(response: Response) {
-  if (response.success) {
-    // $ExpectError
-    var value: boolean = response.value; // Error!
-  } else {
-    // $ExpectError
-    var error: string = response.error; // Error!
-  }
-}
+// function handleResponse(response: Response) {
+//   if (response.success) {
+//     // $ExpectError
+//     var value: boolean = response.value; // Error!
+//   } else {
+//     // $ExpectError
+//     var error: string = response.error; // Error!
+//   }
+// }
 
 
 // @flow

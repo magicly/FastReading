@@ -1,3 +1,4 @@
+// @flow
 import React from 'react';
 import {
   Text,
@@ -13,7 +14,7 @@ import InfoList from './InfoList';
 
 const url = 'https://cnodejs.org/api/v1/topics?page=';
 
-export default (props) => {
+export default (props: { navigation: { navigate: any } }) => {
   const fetchData = async pageNo => {
     try {
       const response = await fetch(url + pageNo);
@@ -23,7 +24,7 @@ export default (props) => {
         e.href = 'https://cnodejs.org/topic/' + e.id
       })
       return json.data;
-    } catch (e) {
+    } catch (error) {
       console.info('fetchData error: ', error);
       return [];
     }
